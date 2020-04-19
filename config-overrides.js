@@ -1,4 +1,4 @@
-const { override, addWebpackAlias } = require('customize-cra');
+const { override, addWebpackAlias, addLessLoader } = require('customize-cra');
 
 const path = require('path');
 
@@ -9,6 +9,11 @@ function resolve(dir) {
 const config = override(
   addWebpackAlias({
     '@': resolve('src')
+  }),
+  addLessLoader({
+    strictMath: true,
+    noIeCompat: true,
+    modules: true
   })
 );
 
