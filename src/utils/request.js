@@ -2,7 +2,7 @@ import instance from './axios';
 import qs from 'qs';
 
 const handleResponse = (res, resolve, reject) => {
-  resolve(res.data)
+  resolve(res.data);
 };
 
 export function AppPost(url, data) {

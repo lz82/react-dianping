@@ -1,11 +1,11 @@
-import axios from 'axios'
-import appConfig from '@/config'
+import axios from 'axios';
+import appConfig from '@/config';
 
 // create axios instance
 const instance = axios.create({
   baseURL: appConfig.baseUrl,
   timeout: 1000 * 60 // 1 min
-})
+});
 
 // Add a request interceptor
 instance.interceptors.request.use(
@@ -16,12 +16,12 @@ instance.interceptors.request.use(
     //   config.headers['authorization'] = userToken
     // }
     // config.withCredentials = true
-    return config
+    return config;
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 // Add a response interceptor
 instance.interceptors.response.use(
@@ -34,11 +34,11 @@ instance.interceptors.response.use(
     //     duration: 2000
     //   })
     // }
-    return response
+    return response;
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
-export default instance
+export default instance;

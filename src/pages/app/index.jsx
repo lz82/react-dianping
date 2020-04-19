@@ -4,10 +4,10 @@ import { appApi } from '@/services';
 function App() {
   async function fetchData() {
     const res = await appApi.queryLikes();
-    console.log(res)
+    console.log(res);
   }
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
   return <div className="App">app page...asdf</div>;
 }

@@ -1,5 +1,3 @@
-import * as appApi from './app'
+import * as appApi from './app';
 
-export {
-  appApi
-}
+export { appApi };
