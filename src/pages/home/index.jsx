@@ -1,5 +1,5 @@
-import React from 'react'
-import Likes from './containers/likes'
+import React from 'react';
+import Likes from './containers/likes';
 
 export default function () {
   return (
@@ -7,5 +7,5 @@ export default function () {
       home
       <Likes />
     </div>
-  )
+  );
 }

@@ -1,5 +1,9 @@
 export const QUERY_DATA = 'queryData';
 
+// 将查询的结果统一
+// 领域名：结果数组
+// 这种形式便于domain的reducer去获取
+// domain 的reducer 不再通过action.type来匹配，而是根据约定的action属性
 const handleQueryResult = (schema, data) => {
   let kvObj = {};
   let ids = [];
@@ -36,8 +40,10 @@ export default (store) => (next) => async (action) => {
   try {
     const res = await api();
     const queryResult = handleQueryResult(schema, res);
+    // 成功时，在action中添加queryResult特殊属性，便于reducer根据action中的属性来做通用处理
     next(withAction(reducerSuccess(queryResult)));
   } catch (err) {
+    // 失败时，在action中添加error属性，这样app的reducer判断存在error则自动调用reducer将异常写入app state
     next(withAction(reducerFailure(err.toString())));
   }
 };

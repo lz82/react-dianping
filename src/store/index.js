@@ -5,7 +5,7 @@ import logger from 'redux-logger';
 import domainReducer from './domains';
 import moduleReducer from './modules';
 
-import queryApiMiddleWare from './middlewares/query-api'
+import queryApiMiddleWare from './middlewares/query-api';
 
 const rootReducer = combineReducers({
   domainReducer,
@@ -16,7 +16,10 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let store = null;
 if (process.env.NODE_ENV !== 'production') {
-  store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk, queryApiMiddleWare)));
+  store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(logger, thunk, queryApiMiddleWare))
+  );
 } else {
   store = createStore(rootReducer, applyMiddleware(thunk, queryApiMiddleWare));
 }

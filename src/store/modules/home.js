@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import { appApi } from '@/services';
 import { QUERY_DATA } from '@/store/middlewares/query-api';
-import { schema } from '@/store/domains/product'
+import { schema } from '@/store/domains/product';
 // #region [action-types]
 export const actionTypes = {
   QUERY_LIKES: 'home/query_likes',
