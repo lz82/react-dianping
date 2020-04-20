@@ -1,32 +1,43 @@
-const QUERY_DATA = 'query_data'
+export const QUERY_DATA = 'queryData';
 
-export class QueryApiModel {
-  constructor(reducers, api, schema) {
-    const { reducerRequest, reducerSuccess, reducerFailure } = reducers
-    const { domain } = schema
-    this.reducerRequest = reducerRequest
-    this.reducerSuccess = reducerSuccess
-    this.reducerFailure = reducerFailure
-    this.api = api
-    this.domain = domain
-    // this.category = QUERY_DATA
+const handleQueryResult = (schema, data) => {
+  let kvObj = {};
+  let ids = [];
+  if (Array.isArray(data)) {
+    data.forEach((item) => {
+      ids.push(item[schema.id]);
+      kvObj[item[schema.id]] = item;
+    });
+  } else {
+    ids.push(data[schema.id]);
+    kvObj[data[schema.id]] = data;
   }
-  category = QUERY_DATA
-}
+  return {
+    [schema.domainName]: kvObj
+  };
+};
 
-export default store => next => async action => {
-  console.log('middleware', action, next, store, action.category)
-  if (action.category !== QUERY_DATA) {
-    return next(action)
+export default (store) => (next) => async (action) => {
+  const queryAction = action[QUERY_DATA];
+  if (!queryAction) {
+    return next(action);
   }
-  const { reducers, api } = action
-  const { reducerRequest, reducerSuccess, reducerFailure } = reducers
-  next(reducerRequest())
+
+  // 将action的其他参数传入之后的中间件
+  const withAction = (data) => {
+    let finalAction = { ...data, ...action };
+    delete finalAction[QUERY_DATA];
+    return finalAction;
+  };
+
+  const { reducers, api, schema } = queryAction;
+  const { reducerRequest, reducerSuccess, reducerFailure } = reducers;
+  next(withAction(reducerRequest()));
   try {
-    const res = await api()
-    console.log('res', res)
-    next(reducerSuccess(res))
+    const res = await api();
+    const queryResult = handleQueryResult(schema, res);
+    next(withAction(reducerSuccess(queryResult)));
   } catch (err) {
-    next(reducerFailure(err))
+    next(withAction(reducerFailure(err.toString())));
   }
-}
+};

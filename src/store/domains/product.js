@@ -1,10 +1,17 @@
 import { fromJS } from 'immutable';
 
-const defaultState = {};
+export const schema = {
+  domainName: 'product',
+  id: 'id'
+}
+
+const defaultState = {
+  list: []
+};
 
 export default (state = fromJS(defaultState), action) => {
-  switch (action.type) {
-    default:
-      return state;
+  if (action.queryResult && action.queryResult.product) {
+    return state.set('list', action.queryResult.product)
   }
+  return state
 };

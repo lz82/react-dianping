@@ -1,83 +1,83 @@
-import { fromJS } from 'immutable'
-import { appApi } from '@/services'
-
+import { fromJS } from 'immutable';
+import { appApi } from '@/services';
+import { QUERY_DATA } from '@/store/middlewares/query-api';
+import { schema } from '@/store/domains/product'
+// #region [action-types]
 export const actionTypes = {
   QUERY_LIKES: 'home/query_likes',
   FETCH_LIKES_REQUEST: 'home/fetch_likes_request',
   FETCH_LIKES_SUCCESS: 'home/fetch_likes_success',
   FETCH_LIKES_FAILURE: 'home/fetch_likes_failure'
-}
+};
 
+// #endregion
+
+// #region [action-creators]
 const fetchLikesRequest = () => {
   return {
     type: actionTypes.FETCH_LIKES_REQUEST
-  }
-}
+  };
+};
 
-const fetchLikesSuccess = data => {
+const fetchLikesSuccess = (data) => {
   return {
     type: actionTypes.FETCH_LIKES_SUCCESS,
-    payload: data
-  }
-}
+    queryResult: data
+  };
+};
 
-const fetchLikesFailure = msg => {
+const fetchLikesFailure = (msg) => {
   return {
     type: actionTypes.FETCH_LIKES_FAILURE,
-    payload: msg
-  }
-}
+    error: msg
+  };
+};
 
 export const actionCreators = {
-  queryLikes: () => {
-    // return async (dispatch) => {
-    //   dispatch(fetchLikesRequest())
-    //   try {
-    //     const likes = await appApi.queryLikes()
-    //     dispatch(fetchLikesSuccess(likes))
-    //   } catch(err) {
-    //     dispatch(fetchLikesFailure(err))
-    //   }
-    // }
+  queryLikes: (...params) => {
     const reducers = {
       reducerRequest: fetchLikesRequest,
       reducerSuccess: fetchLikesSuccess,
       reducerFailure: fetchLikesFailure
-    }
-    const schema = {
-      domain: 'product'
-    }
-    return  {
-      category: 'query_data',
-      reducers,
-      schema,
-      api: appApi.queryLikes
-    }
+    };
+    return {
+      [QUERY_DATA]: {
+        reducers,
+        schema,
+        api: appApi.queryLikes
+      },
+      ...params
+    };
   }
-}
+};
+// #endregion
 
+// #region [state]
 const defaultState = {
   isLoading: false,
   list: [],
   errMsg: ''
 };
 
+// #endregion
+
+// #region [reducer]
 export default (state = fromJS(defaultState), action) => {
   switch (action.type) {
     case actionTypes.FETCH_LIKES_REQUEST:
-      return state.set('isLoading', true)
+      return state.set('isLoading', true);
     case actionTypes.FETCH_LIKES_SUCCESS:
-      console.log('fromjs', fromJS(action.payload))
       return state.merge({
         isLoading: false,
-        list: fromJS(action.payload)
-      })
+        list: fromJS(action.queryResult)
+      });
     case actionTypes.FETCH_LIKES_FAILURE:
       return state.merge({
         isLoading: false,
-        errMsg: action.payload
-      })
+        errMsg: action.error
+      });
     default:
       return state;
   }
 };
+// #endregion
