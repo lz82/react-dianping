@@ -13,7 +13,7 @@ export function AppPost(url, data) {
         handleResponse(res, resolve, reject);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.toString());
       });
   });
 }
@@ -33,7 +33,7 @@ export function AppGet(url, data) {
         handleResponse(res, resolve, reject);
       })
       .catch((err) => {
-        reject(err);
+        reject(err.toString());
       });
   });
 }

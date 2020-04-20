@@ -1,15 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { appApi } from '@/services';
-function App() {
-  async function fetchData() {
-    const res = await appApi.queryLikes();
-    console.log(res);
-  }
-  useEffect(() => {
-    fetchData();
-  }, []);
-  return <div className="App">app page...asdf</div>;
+function App(props) {
+  return <div className="App">
+    {props.children}
+  </div>;
 }
 
 export default App;
