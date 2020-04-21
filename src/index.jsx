@@ -10,16 +10,16 @@ import store from '@/store';
 import Home from '@/pages/home';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App>
-        <Router>
-          <Switch>
-            <Route path="/home" render={(props) => <Home {...props} />} />
-          </Switch>
-        </Router>
-      </App>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App>
+      <Router>
+        <Switch>
+          <Route path="/home" render={(props) => <Home {...props} />} />
+        </Switch>
+      </Router>
+    </App>
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
