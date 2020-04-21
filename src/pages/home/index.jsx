@@ -1,6 +1,6 @@
 import React from 'react';
 import Likes from './containers/likes';
-import Category from './components/category'
+import Category from './components/category';
 
 export default function () {
   return (
