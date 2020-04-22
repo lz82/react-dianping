@@ -4,21 +4,25 @@ export const QUERY_DATA = 'queryData';
 // 领域名：结果数组
 // 这种形式便于domain的reducer去获取
 // domain 的reducer 不再通过action.type来匹配，而是根据约定的action属性
-const handleQueryResult = (schema, data) => {
-  let kvObj = {};
-  let ids = [];
-  if (Array.isArray(data)) {
-    data.forEach((item) => {
-      ids.push(item[schema.id]);
-      kvObj[item[schema.id]] = item;
-    });
+const handleQueryResult = (data, schema) => {
+  if (schema) {
+    let kvObj = {};
+    let ids = [];
+    if (Array.isArray(data)) {
+      data.forEach((item) => {
+        ids.push(item[schema.id]);
+        kvObj[item[schema.id]] = item;
+      });
+    } else {
+      ids.push(data[schema.id]);
+      kvObj[data[schema.id]] = data;
+    }
+    return {
+      [schema.domainName]: kvObj
+    };
   } else {
-    ids.push(data[schema.id]);
-    kvObj[data[schema.id]] = data;
+    return data;
   }
-  return {
-    [schema.domainName]: kvObj
-  };
 };
 
 export default (store) => (next) => async (action) => {
@@ -39,7 +43,7 @@ export default (store) => (next) => async (action) => {
   next(withAction(reducerRequest()));
   try {
     const res = await api();
-    const queryResult = handleQueryResult(schema, res);
+    const queryResult = handleQueryResult(res, schema);
     // 成功时，在action中添加queryResult特殊属性，便于reducer根据action中的属性来做通用处理
     next(withAction(reducerSuccess(queryResult)));
   } catch (err) {

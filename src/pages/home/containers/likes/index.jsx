@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { actionCreators as homeActionCreators } from '@/store/modules/home';
+import { actionCreators as homeActionCreators, getLikeList } from '@/store/modules/home';
 import view from '../../components/likes';
 
 const stateToProps = (state) => {
   return {
-    app: state.app
+    likeList: getLikeList(state)
   };
 };
 

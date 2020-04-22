@@ -19,9 +19,9 @@ export default function ErrorToast(props) {
     };
   }, []);
 
-  return errorMsg ? (
+  return (
     <div className={css['error-toast-wrapper']}>
       <div className={css['error-toast-text']}>{errorMsg}</div>
     </div>
-  ) : null;
+  );
 }

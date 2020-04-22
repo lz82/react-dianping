@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 
 export default function Likes(props) {
-  const { queryLikes } = props;
-
+  const { likeList, queryLikes } = props;
+  console.log('likeList', likeList)
   useEffect(() => {
     queryLikes({ name: 'lz', age: 18 }, { total: 111 });
   }, []);
 
-  return <div>猜你喜欢</div>;
+  return <div>
+    guess your like
+  </div>;
 }

@@ -141,26 +141,41 @@ const categoryData = [
 export default function HomeCategory() {
   const settings = {
     dots: true,
+    arrows: false,
     infinite: true,
-    speed: 2000,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false
+    autoplay: false,
+    autoplaySpeed: 4000
   };
+
+  const handleClick = (item) => {
+    console.log(item);
+  };
+
   return (
-    <div>
-      <Slider {...settings}>
-        {categoryData.map((list, index) => (
-          <div key={index} className={css['category-wrapper']}>
-            {list.map((item) => (
-              <div key={item.name} className={css['category-item']}>
-                <img src={item.src} alt="" />
-                <span>{item.name}</span>
+    <div className={css['full-wrapper']}>
+      <div className={css['category-wrapper']}>
+        <Slider {...settings}>
+          {categoryData.map((list, index) => (
+            <div key={index} className={css['category-wrapper']}>
+              <div className={css['category-container']}>
+                {list.map((item) => (
+                  <div
+                    key={item.name}
+                    className={css['category-item']}
+                    onClick={() => handleClick(item)}
+                  >
+                    <img src={item.src} alt="" />
+                    <span>{item.name}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
-      </Slider>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 }

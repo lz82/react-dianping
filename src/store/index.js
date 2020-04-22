@@ -8,7 +8,7 @@ import moduleReducer from './modules';
 import queryApiMiddleWare from './middlewares/query-api';
 
 const rootReducer = combineReducers({
-  domainReducer,
+  domain: domainReducer,
   ...moduleReducer
 });
 

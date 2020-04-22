@@ -6,12 +6,12 @@ export const schema = {
 };
 
 const defaultState = {
-  list: []
+  likeList: []
 };
 
 export default (state = fromJS(defaultState), action) => {
   if (action.queryResult && action.queryResult.product) {
-    return state.set('list', action.queryResult.product);
+    return state.set('likeList', action.queryResult.product);
   }
   return state;
 };
