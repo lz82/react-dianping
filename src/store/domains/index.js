@@ -4,7 +4,7 @@ import comment from './comment';
 import order from './order';
 import product from './product';
 import shop from './shop';
-import ad from './ad'
+import ad from './ad';
 
 const domainReducer = combineReducers({
   comment,
