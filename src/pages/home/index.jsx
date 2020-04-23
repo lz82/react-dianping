@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators, getHeadLine, getDiscount } from '@/store/modules/home';
+import { actionCreators, getHeadLine, getDiscount, getLikes } from '@/store/modules/home';
 import Likes from './containers/likes';
 import Category from './containers/category';
 import HeadLine from './containers/head-line';
@@ -13,7 +13,8 @@ function Home(props) {
   const {
     homeActions: { queryHome },
     headLine,
-    discount
+    discount,
+    likes
   } = props;
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function Home(props) {
       <div className="space" />
       {discount.length > 0 ? <Discount data={discount} /> : <div>loading...</div>}
       <div className="space" />
-      <Likes />
+      <Likes data={likes} />
     </div>
   );
 }
@@ -36,7 +37,8 @@ function Home(props) {
 const mapStateToProps = (state) => {
   return {
     headLine: getHeadLine(state),
-    discount: getDiscount(state)
+    discount: getDiscount(state),
+    likes: getLikes(state)
   };
 };
 
