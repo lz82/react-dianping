@@ -74,10 +74,10 @@ export const getDiscount = (state) => {
   return temp ? temp.toJS() : [];
 };
 
-export const getLikes = state => {
-  const temp = state.getIn(['home', 'homeAd', 'likes'])
-  return temp ? temp.toJS() : []
-}
+export const getLikes = (state) => {
+  const temp = state.getIn(['home', 'homeAd', 'likes']);
+  return temp ? temp.toJS() : [];
+};
 // #endregion
 
 // #region [reducer]
