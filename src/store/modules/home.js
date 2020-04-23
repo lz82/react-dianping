@@ -65,8 +65,14 @@ const defaultState = {
 
 // #region [selectors]
 export const getHeadLine = (state) => {
-  return state.getIn(['home', 'homeAd']).toJS().headLine;
-};
+  const temp = state.getIn(['home', 'homeAd', 'headLine'])
+  return temp ? temp.toJS() : []
+}
+
+export const getDiscount = state => {
+  const temp = state.getIn(['home', 'homeAd', 'discount'])
+  return temp ? temp.toJS() : []
+}
 // #endregion
 
 // #region [reducer]
