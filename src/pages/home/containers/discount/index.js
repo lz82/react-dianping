@@ -1,3 +1,3 @@
-import view from '../../components/discount'
+import view from '../../components/discount';
 
-export default view
+export default view;
