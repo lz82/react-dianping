@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import Loading from '@/components/loading'
+import Loading from '@/components/loading';
 import css from './index.module.less';
 
 export default function Likes(props) {
@@ -97,7 +97,7 @@ export default function Likes(props) {
       if (loadingTime < 3) {
         setLikeList((preList) => preList.concat(mockNewData));
         setLoadingTime((lastTime) => {
-          return lastTime + 1
+          return lastTime + 1;
         });
       }
     }
@@ -127,9 +127,7 @@ export default function Likes(props) {
           </Link>
         ))}
       </div>
-      {
-        loadingTime < 3 ? <Loading /> : <div className={css['load-more']}>查看更多</div>
-      }
+      {loadingTime < 3 ? <Loading /> : <div className={css['load-more']}>查看更多</div>}
     </div>
   );
 }

@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { actionCreators, getHeadLine, getDiscount, getLikes } from '@/store/modules/home';
 
 import Loading from '@/components/loading';
-import HomeHeader from './containers/home-header'
-import Banner from './containers/banner'
+import HomeHeader from './containers/home-header';
+import Banner from './containers/banner';
 import Likes from './containers/likes';
 import Category from './containers/category';
 import HeadLine from './containers/head-line';
 import Discount from './containers/discount';
-import AppFooter from '@/components/footer'
+import AppFooter from '@/components/footer';
 
 import css from './index.module.less';
 

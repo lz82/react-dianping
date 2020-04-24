@@ -1,3 +1,3 @@
-import view from '../../components/home-header'
+import view from '../../components/home-header';
 
-export default view
+export default view;

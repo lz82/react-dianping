@@ -1,3 +1,3 @@
-import view from '../../components/banner'
+import view from '../../components/banner';
 
-export default view
+export default view;

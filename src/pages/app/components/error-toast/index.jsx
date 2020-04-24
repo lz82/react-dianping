@@ -7,7 +7,7 @@ export default function ErrorToast(props) {
     appAction: { clearError }
   } = props;
 
-  const timerRef = useRef()
+  const timerRef = useRef();
 
   // todo: use ref to keep timer
   useEffect(() => {
