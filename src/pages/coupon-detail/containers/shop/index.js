@@ -1,3 +1,3 @@
-import view from '../../components/shop'
+import view from '../../components/shop';
 
-export default view
+export default view;

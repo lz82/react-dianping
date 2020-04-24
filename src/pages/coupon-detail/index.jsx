@@ -2,7 +2,7 @@ import React from 'react';
 
 import Overview from './containers/overview';
 import Shop from './containers/shop';
-import Detail from './containers/detail'
+import Detail from './containers/detail';
 
 import css from './index.module.less';
 

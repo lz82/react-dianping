@@ -1,3 +1,3 @@
-import view from '../../components/detail'
+import view from '../../components/detail';
 
-export default view
+export default view;

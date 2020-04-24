@@ -5,7 +5,7 @@ import 'normalize.css/normalize.css';
 import './styles/index.less';
 import App from '@/pages/app';
 import store from '@/store';
-import Routers from './routers'
+import Routers from './routers';
 
 ReactDOM.render(
   // <React.StrictMode>

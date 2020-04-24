@@ -1,3 +1,3 @@
-import view from '../../components/overview'
+import view from '../../components/overview';
 
-export default view
+export default view;
