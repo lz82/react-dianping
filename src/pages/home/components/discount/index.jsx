@@ -3,7 +3,6 @@ import css from './index.module.less';
 
 export default function Discount(props) {
   const { data } = props;
-  console.log('discount', data);
   return (
     <div className={css['discount-wrapper']}>
       <div className={css['header']}>

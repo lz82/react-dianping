@@ -2,10 +2,15 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators, getHeadLine, getDiscount, getLikes } from '@/store/modules/home';
+
+import Loading from '@/components/loading';
+import HomeHeader from './containers/home-header'
+import Banner from './containers/banner'
 import Likes from './containers/likes';
 import Category from './containers/category';
 import HeadLine from './containers/head-line';
 import Discount from './containers/discount';
+import AppFooter from '@/components/footer'
 
 import css from './index.module.less';
 
@@ -23,13 +28,16 @@ function Home(props) {
 
   return (
     <div className={css['home-wrapper']}>
+      <HomeHeader />
+      <Banner />
       <Category />
       <div className="space" />
-      {headLine.length > 0 ? <HeadLine data={headLine} /> : <div>loading...</div>}
+      {headLine.length > 0 ? <HeadLine data={headLine} /> : <Loading />}
       <div className="space" />
-      {discount.length > 0 ? <Discount data={discount} /> : <div>loading...</div>}
+      {discount.length > 0 ? <Discount data={discount} /> : <Loading />}
       <div className="space" />
-      <Likes data={likes} />
+      {likes.length > 0 ? <Likes data={likes} /> : <Loading />}
+      <AppFooter />
     </div>
   );
 }

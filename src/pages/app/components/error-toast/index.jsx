@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import css from './index.module.less';
 
 export default function ErrorToast(props) {
@@ -6,16 +6,17 @@ export default function ErrorToast(props) {
     errorMsg,
     appAction: { clearError }
   } = props;
-  let timer = null;
+
+  const timerRef = useRef()
 
   // todo: use ref to keep timer
   useEffect(() => {
-    timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       clearError();
     }, 3000);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timerRef.current);
     };
   }, []);
 
