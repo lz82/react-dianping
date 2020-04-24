@@ -108,7 +108,7 @@ export default function Likes(props) {
       <div className={css['header']}>猜你喜欢</div>
       <div className={css['list']} ref={likeRef}>
         {likeList.map((item, index) => (
-          <Link key={index} className={css['item']} to={`/detail/${item.id}`}>
+          <Link key={index} className={css['item']} to={`/coupon/${item.id}`}>
             <div className={css['pic-container']}>
               <div className={css['pic-tag']}>{item.tag}</div>
               <img alt="" className={css['pic']} src={item.picture} />
