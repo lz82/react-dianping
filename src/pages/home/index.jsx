@@ -7,7 +7,7 @@ import Loading from '@/components/loading';
 import HomeHeader from './containers/home-header';
 import Banner from './containers/banner';
 import Category from './containers/category';
-import Activity from './containers/activity'
+import Activity from './containers/activity';
 import HeadLine from './containers/head-line';
 import Discount from './containers/discount';
 import Likes from './containers/likes';

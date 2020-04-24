@@ -1,3 +1,3 @@
-import view from '../../components/activity'
+import view from '../../components/activity';
 
-export default view
+export default view;
