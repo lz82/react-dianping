@@ -3,9 +3,9 @@ import React from 'react';
 import Overview from './containers/overview';
 import Shop from './containers/shop';
 import Detail from './containers/detail';
-import Remark from './containers/remark'
-import Footer from '@/components/footer'
-import BuyBtn from './containers/buy-btn'
+import Remark from './containers/remark';
+import Footer from '@/components/footer';
+import BuyBtn from './containers/buy-btn';
 
 import css from './index.module.less';
 

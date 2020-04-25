@@ -1,3 +1,3 @@
-import view from '../../components/remark'
+import view from '../../components/remark';
 
-export default view
+export default view;

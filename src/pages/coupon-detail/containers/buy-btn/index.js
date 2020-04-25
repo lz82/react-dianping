@@ -1,3 +1,3 @@
-import view from '../../components/buy-btn'
+import view from '../../components/buy-btn';
 
-export default view
+export default view;
