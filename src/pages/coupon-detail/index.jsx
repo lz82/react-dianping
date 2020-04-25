@@ -1,5 +1,6 @@
 import React from 'react';
 
+import HeaderBar from '@/components/header-bar';
 import Overview from './containers/overview';
 import Shop from './containers/shop';
 import Detail from './containers/detail';
@@ -61,8 +62,13 @@ export default function CouponDetail(props) {
     phone: '01069614833'
   };
 
+  const handleBack = () => {
+    props.history.go(-1);
+  };
+
   return (
     <div className={css['coupon-detail-wrapper']}>
+      <HeaderBar title="团购详情" onBack={handleBack} />
       <Overview data={detailInfo} />
       <Shop data={shopInfo} />
       <Detail data={detailInfo} />

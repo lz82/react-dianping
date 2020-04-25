@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import ScrollToTop from '@/components/scroll-to-top'
 import loadable from '@loadable/component';
 import Loading from '@/components/loading';
 
@@ -24,6 +24,7 @@ const CouponDetail = loadable(() => import('@/pages/coupon-detail'), {
 export default function Routers() {
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Route path="/home" render={(props) => <Home {...props} />} />
         <Route path="/coupon/:id" render={(props) => <CouponDetail {...props} />} />
