@@ -3,6 +3,9 @@ import React from 'react';
 import Overview from './containers/overview';
 import Shop from './containers/shop';
 import Detail from './containers/detail';
+import Remark from './containers/remark'
+import Footer from '@/components/footer'
+import BuyBtn from './containers/buy-btn'
 
 import css from './index.module.less';
 
@@ -63,6 +66,9 @@ export default function CouponDetail(props) {
       <Overview data={detailInfo} />
       <Shop data={shopInfo} />
       <Detail data={detailInfo} />
+      <Remark data={detailInfo} />
+      <Footer />
+      <BuyBtn id={detailInfo.id} />
     </div>
   );
 }
