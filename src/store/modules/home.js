@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable';
 import { homeApi } from '@/services';
+// import { schema } from '@/store/domains/product'
 import { QUERY_DATA } from '@/store/middlewares/query-api';
 
 // #region [action-types]
@@ -46,6 +47,7 @@ export const actionCreators = {
     return {
       [QUERY_DATA]: {
         reducers,
+        // schema,
         api: homeApi.queryHomeAd
       },
       ...params
@@ -66,17 +68,17 @@ const defaultState = {
 // #region [selectors]
 export const getHeadLine = (state) => {
   const temp = state.getIn(['home', 'homeAd', 'headLine']);
-  return temp ? temp.toJS() : [];
+  return temp && temp.toJS ? temp.toJS() : [];
 };
 
 export const getDiscount = (state) => {
   const temp = state.getIn(['home', 'homeAd', 'discount']);
-  return temp ? temp.toJS() : [];
+  return temp && temp.toJS ? temp.toJS() : [];
 };
 
 export const getLikes = (state) => {
   const temp = state.getIn(['home', 'homeAd', 'likes']);
-  return temp ? temp.toJS() : [];
+  return temp && temp.toJS ? temp.toJS() : [];
 };
 // #endregion
 

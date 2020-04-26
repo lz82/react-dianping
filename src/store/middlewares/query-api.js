@@ -38,11 +38,11 @@ export default (store) => (next) => async (action) => {
     return finalAction;
   };
 
-  const { reducers, api, schema } = queryAction;
+  const { reducers, api, apiParams, schema } = queryAction;
   const { reducerRequest, reducerSuccess, reducerFailure } = reducers;
   next(withAction(reducerRequest()));
   try {
-    const res = await api();
+    const res = await api(apiParams);
     const queryResult = handleQueryResult(res, schema);
     // 成功时，在action中添加queryResult特殊属性，便于reducer根据action中的属性来做通用处理
     next(withAction(reducerSuccess(queryResult)));
