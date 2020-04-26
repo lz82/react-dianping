@@ -20,7 +20,6 @@ export const actionTypes = {
 
 // #endregion
 
-
 // #region private [action-creators]
 const fetchDetailBasic = () => {
   return {
@@ -111,10 +110,10 @@ export const getDetailBasicInfo = (state) => {
   return temp && temp.toJS ? temp.toJS() : {};
 };
 
-export const getDetailShopInfo = state => {
-  const temp = state.getIn(['detail', 'shopInfo', 'info'])
-  return temp && temp.toJS ? temp.toJS() : {}
-}
+export const getDetailShopInfo = (state) => {
+  const temp = state.getIn(['detail', 'shopInfo', 'info']);
+  return temp && temp.toJS ? temp.toJS() : {};
+};
 
 // #endregion
 
