@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import css from './index.module.less';
-export default function HotSearch() {
-  const data = ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c'];
+export default function HotSearch(props) {
+  const {
+    hotSearch,
+    hotSearchActions: { queryHotSearch }
+  } = props;
   const handleClick = (item) => {};
+
+  useEffect(() => {
+    queryHotSearch();
+  }, []);
+
   return (
     <div className={css['hot-search-wrapper']}>
-      {data.map((item, index) => {
+      {hotSearch.map((item, index) => {
         return (
-          <span key={index} onClick={() => handleClick(item)} className={css['item']}>
-            {item}
+          <span key={item.id} onClick={() => handleClick(item.id)} className={css['item']}>
+            {item.keyword}
           </span>
         );
       })}

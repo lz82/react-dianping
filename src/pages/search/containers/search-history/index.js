@@ -1,3 +1,20 @@
-import view from '../../components/search-history';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
-export default view;
+import {searchHistory, actionCreators} from '@/store/modules/search'
+
+import View from '../../components/search-history';
+
+const mapStateToPros = state => {
+  return {
+    searchHistory: searchHistory(state)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    historyActions: bindActionCreators(actionCreators, dispatch)
+  }
+}
+
+export default connect(mapStateToPros, mapDispatchToProps)(View);

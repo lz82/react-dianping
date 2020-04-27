@@ -6,7 +6,7 @@ import SearchHistory from './containers/search-history';
 
 import css from './index.module.less';
 
-export default function Search() {
+function Search(props) {
   return (
     <div className={css['search-wrapper']}>
       <SearchBar />
@@ -15,3 +15,7 @@ export default function Search() {
     </div>
   );
 }
+
+
+
+export default Search;

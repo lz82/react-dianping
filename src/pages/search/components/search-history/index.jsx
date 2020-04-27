@@ -1,31 +1,33 @@
 import React from 'react';
 import css from './index.module.less';
-export default function SearchHistory() {
-  const data = [
-    {
-      id: 1,
-      keyword: '哈哈'
-    }
-  ];
+export default function SearchHistory(props) {
+  const {
+    searchHistory,
+    historyActions: { clearSearchHistory }
+  } = props;
 
   const handleClick = (item) => {};
 
-  const handleClear = () => {};
+  const handleClear = () => {
+    clearSearchHistory();
+  };
   return (
     <div className={css['search-history-wrapper']}>
       <div className={css['header']}>搜索记录</div>
       <ul className={css['list']}>
-        {data.map((item, index) => {
+        {searchHistory.map((item, index) => {
           return (
-            <li key={item.id} onClick={() => handleClick(item)} className={css['item']}>
-              {item.keyword}
+            <li key={index} onClick={() => handleClick(item)} className={css['item']}>
+              {item}
             </li>
           );
         })}
       </ul>
-      <div className={css['clear']} onClick={handleClear}>
-        清除搜索记录
-      </div>
+      {searchHistory.length > 0 ? (
+        <div className={css['clear']} onClick={handleClear}>
+          清除搜索记录
+        </div>
+      ) : null}
     </div>
   );
 }

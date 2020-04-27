@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import css from './index.module.less';
-export default function SearchBar() {
-  const [inputVal, setInputVal] = useState('');
+export default function SearchBar(props) {
+  const {
+    searchInputVal,
+    relatedSearch,
+    searchActions: { searchInputValChange, queryRelatedSearch }
+  } = props;
+
+  useEffect(() => {
+    if (searchInputVal) {
+      queryRelatedSearch(searchInputVal);
+    }
+  }, [searchInputVal]);
+
   const handleChange = (e) => {
-    setInputVal(e.target.value);
+    searchInputValChange(e.target.value);
   };
 
-  const handleClear = () => {};
+  const handleClear = () => {
+    searchInputValChange('');
+  };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    searchInputValChange('');
+    props.history.goBack();
+  };
 
-  const relatedKeywords = [
-    {
-      id: 1,
-      keyword: '火锅',
-      quantity: 3
-    },
-    {
-      id: 2,
-      keyword: '烧烤',
-      quantity: 10
-    }
-  ];
-
-  const handleClickItem = (item) => {};
+  const handleClickItem = (item) => {
+    console.log(item)
+  };
 
   const renderSuggestList = (list) => {
     return (
       <ul className={css['list']}>
-        {relatedKeywords.map((item) => {
+        {relatedSearch.map((item) => {
           return (
             <li key={item.id} onClick={() => handleClickItem(item)} className={css['item']}>
               <span className={css['keyword']}>{item.keyword}</span>
@@ -43,13 +48,18 @@ export default function SearchBar() {
   return (
     <div className={css['search-bar-wrapper']}>
       <div className={css['container']}>
-        <input className={css['text']} value={inputVal} onChange={handleChange} />
+        <input
+          className={css['text']}
+          value={searchInputVal}
+          onChange={handleChange}
+          placeholder="输入商户名、地点"
+        />
         <span className={css['clear']} onClick={handleClear} />
         <span className={css['cancel']} onClick={handleCancel}>
           取消
         </span>
       </div>
-      {inputVal ? renderSuggestList() : null}
+      {searchInputVal && relatedSearch ? renderSuggestList() : null}
     </div>
   );
 }
