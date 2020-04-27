@@ -29,6 +29,14 @@ const Search = loadable(() => import('@/pages/search'), {
   )
 });
 
+const SearchResult = loadable(() => import('@/pages/search-result'), {
+  fallback: (
+    <div>
+      <Loading />
+    </div>
+  )
+});
+
 export default function Routers() {
   return (
     <Router>
@@ -37,6 +45,7 @@ export default function Routers() {
         <Route path="/home" render={(props) => <Home {...props} />} />
         <Route path="/coupon/:id" render={(props) => <CouponDetail {...props} />} />
         <Route path="/search" render={(props) => <Search {...props} />} />
+        <Route path="/search-result" render={(props) => <SearchResult {...props} />} />
       </Switch>
     </Router>
   );

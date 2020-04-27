@@ -6,7 +6,9 @@ export default function SearchHistory(props) {
     historyActions: { clearSearchHistory }
   } = props;
 
-  const handleClick = (item) => {};
+  const handleClick = (item) => {
+    props.history.push('/search-result');
+  };
 
   const handleClear = () => {
     clearSearchHistory();

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { withRouter } from 'react-router-dom';
 import { searchHistory, actionCreators } from '@/store/modules/search';
 
 import View from '../../components/search-history';
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToPros, mapDispatchToProps)(View);
+export default withRouter(connect(mapStateToPros, mapDispatchToProps)(View));

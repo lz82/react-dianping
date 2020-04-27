@@ -1,5 +1,6 @@
 import View from '../../components/hot-search';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { actionCreators, hotSearch } from '@/store/modules/search';
@@ -16,4 +17,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(View);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(View));

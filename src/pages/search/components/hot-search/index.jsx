@@ -6,7 +6,8 @@ export default function HotSearch(props) {
     hotSearchActions: { queryHotSearch, addSearchHistory }
   } = props;
   const handleClick = (keyword) => {
-    addSearchHistory(keyword)
+    addSearchHistory(keyword);
+    props.history.push('/search-result')
   };
 
   useEffect(() => {

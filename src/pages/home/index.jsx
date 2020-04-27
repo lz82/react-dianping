@@ -5,7 +5,7 @@ import { actionCreators, getHeadLine, getDiscount, getLikes } from '@/store/modu
 
 import Loading from '@/components/loading';
 import HomeHeader from './containers/home-header';
-import Banner from './containers/banner';
+import Banner from '@/components/banner';
 import Category from './containers/category';
 import Activity from './containers/activity';
 import HeadLine from './containers/head-line';

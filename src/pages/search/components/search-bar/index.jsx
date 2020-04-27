@@ -34,7 +34,7 @@ export default function SearchBar(props) {
     if (e.keyCode === 13) {
       // 回车
       addSearchHistory(searchInputVal);
-      props.history.push('/search/result');
+      props.history.push('/search-result');
     }
   };
 
