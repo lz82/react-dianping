@@ -134,10 +134,10 @@ export const relatedSearch = (state) => {
   return temp && temp.toJS ? temp.toJS() : [];
 };
 
-export const searchHistory = state => {
-  const temp = state.getIn(['search', 'history'])
-  return temp && temp.toJS ? temp.toJS() : []
-}
+export const searchHistory = (state) => {
+  const temp = state.getIn(['search', 'history']);
+  return temp && temp.toJS ? temp.toJS() : [];
+};
 
 // #endregion
 
@@ -193,7 +193,7 @@ export default (state = fromJS(defaultState), action) => {
         return state;
       }
     case actionTypes.SEARCH_HISTORY_CLEAR:
-      return state.set('history', [])
+      return state.set('history', []);
 
     default:
       return state;

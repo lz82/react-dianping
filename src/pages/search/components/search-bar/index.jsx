@@ -27,7 +27,7 @@ export default function SearchBar(props) {
   };
 
   const handleClickItem = (item) => {
-    console.log(item)
+    console.log(item);
   };
 
   const renderSuggestList = (list) => {

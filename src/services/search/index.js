@@ -1,9 +1,9 @@
-import { AppGet } from '@/utils/request'
+import { AppGet } from '@/utils/request';
 
 export function queryHotSearch() {
-  return AppGet('/search/hot.json')
+  return AppGet('/search/hot.json');
 }
 
 export function queryRelatedSearch() {
-  return AppGet('/search/related.json')
+  return AppGet('/search/related.json');
 }

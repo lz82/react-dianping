@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import { actionCreators, searchInputVal, relatedSearch } from '@/store/modules/search';
-
 
 import View from '../../components/search-bar';
 
