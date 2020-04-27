@@ -4,7 +4,7 @@ export default function SearchBar(props) {
   const {
     searchInputVal,
     relatedSearch,
-    searchActions: { searchInputValChange, queryRelatedSearch }
+    searchActions: { searchInputValChange, queryRelatedSearch, addSearchHistory }
   } = props;
 
   useEffect(() => {
@@ -30,6 +30,14 @@ export default function SearchBar(props) {
     console.log(item);
   };
 
+  const handleKeyUp = (e) => {
+    if (e.keyCode === 13) {
+      // 回车
+      addSearchHistory(searchInputVal);
+      props.history.push('/search/result');
+    }
+  };
+
   const renderSuggestList = (list) => {
     return (
       <ul className={css['list']}>
@@ -52,9 +60,10 @@ export default function SearchBar(props) {
           className={css['text']}
           value={searchInputVal}
           onChange={handleChange}
+          onKeyUp={handleKeyUp}
           placeholder="输入商户名、地点"
         />
-        <span className={css['clear']} onClick={handleClear} />
+        {searchInputVal ? <span className={css['clear']} onClick={handleClear} /> : null}
         <span className={css['cancel']} onClick={handleCancel}>
           取消
         </span>

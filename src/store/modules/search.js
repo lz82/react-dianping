@@ -102,10 +102,10 @@ export const actionCreators = {
     };
   },
 
-  addSearchHistory: (payload) => {
+  addSearchHistory: (keyword) => {
     return {
       type: actionTypes.SEARCH_HISTORY_ADD,
-      payload
+      payload: keyword
     };
   },
 
@@ -186,9 +186,9 @@ export default (state = fromJS(defaultState), action) => {
       // eslint-disable-next-line no-case-declarations
       const history = state.get('history').toJS();
       // eslint-disable-next-line no-case-declarations
-      const temp = history.find((item) => item.keyword === action.payload);
+      const temp = history.find((item) => item === action.payload);
       if (!temp) {
-        return state.set(fromJS(history.unshift(action.payload)));
+        return state.set('history', fromJS([action.payload].concat(history)));
       } else {
         return state;
       }
