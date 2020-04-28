@@ -70,6 +70,12 @@ const defaultState = {
 
 export default (state = fromJS(defaultState), action) => {
   switch (action.type) {
+    case actionTypes.USERNAME_CHANGE:
+      return state.set('username', action.payload);
+    case actionTypes.PWD_CHANGE:
+      return state.set('pwd', action.payload);
+    case actionTypes.TOKEN_CHANGE:
+      return state.set('token', action.payload);
     default:
       return state;
   }
