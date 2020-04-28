@@ -1,3 +1,4 @@
 import View from '../../components/header-bar';
+import { withRouter } from 'react-router-dom';
 
-export default View;
+export default withRouter(View);

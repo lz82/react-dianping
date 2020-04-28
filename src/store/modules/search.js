@@ -15,7 +15,11 @@ export const actionTypes = {
   RELATED_SEARCH_FETCH_FAILURE: 'search/related_search_fetch_failure',
 
   SEARCH_HISTORY_ADD: 'search/search_history_add',
-  SEARCH_HISTORY_CLEAR: 'search/search_history_clear'
+  SEARCH_HISTORY_CLEAR: 'search/search_history_clear',
+
+  SEARCH_RESULT_FETCH: 'search/search_result_fetch',
+  SEARCH_RESULT_FETCH_SUCCESS: 'search/search_result_fetch_success',
+  SEARCH_RESULT_FETCH_FAILURE: 'search/search_result_fetch_failure'
 };
 
 // #endregion
@@ -58,6 +62,26 @@ const relatedSearchFetchSuccess = (data) => {
 const relatedSearchFetchFailure = (err) => {
   return {
     type: actionTypes.RELATED_SEARCH_FETCH_FAILURE,
+    error: err
+  };
+};
+
+const searchResultFetch = () => {
+  return {
+    type: actionTypes.SEARCH_RESULT_FETCH
+  };
+};
+
+const searchResultSuccess = (data) => {
+  return {
+    type: actionTypes.SEARCH_RESULT_FETCH_SUCCESS,
+    queryResult: data
+  };
+};
+
+const searchResultFailure = (err) => {
+  return {
+    type: actionTypes.SEARCH_RESULT_FETCH_FAILURE,
     error: err
   };
 };
@@ -113,6 +137,23 @@ export const actionCreators = {
     return {
       type: actionTypes.SEARCH_HISTORY_CLEAR
     };
+  },
+
+  querySearchResult: (apiParams, ...params) => {
+    const reducers = {
+      reducerRequest: searchResultFetch,
+      reducerSuccess: searchResultSuccess,
+      reducerFailure: searchResultFailure
+    };
+
+    return {
+      [QUERY_DATA]: {
+        reducers,
+        api: searchApi.querySearchResult,
+        apiParams
+      },
+      ...params
+    };
   }
 };
 
@@ -139,6 +180,20 @@ export const searchHistory = (state) => {
   return temp && temp.toJS ? temp.toJS() : [];
 };
 
+export const currentSearchKeyword = (state) => {
+  const temp = state.getIn(['search', 'history']);
+  if (temp && temp.toJS && temp.toJS().length > 0) {
+    return temp.toJS()[0];
+  } else {
+    return '';
+  }
+};
+
+export const searchResult = (state) => {
+  const temp = state.getIn(['search', 'result']);
+  return temp ? temp.toJS() : [];
+};
+
 // #endregion
 
 // #region [reducer]
@@ -148,7 +203,8 @@ const defaultState = {
   isLoading: false,
   hot: [],
   related: [],
-  history: ['喜茶']
+  history: ['喜茶'],
+  result: []
 };
 
 export default (state = fromJS(defaultState), action) => {
@@ -166,7 +222,7 @@ export default (state = fromJS(defaultState), action) => {
     case actionTypes.HOT_SEARCH_FETCH_FAILURE:
       return state.merge({
         isLoading: false,
-        hot: []
+        hot: fromJS([])
       });
 
     case actionTypes.RELATED_SEARCH_FETCH:
@@ -179,21 +235,35 @@ export default (state = fromJS(defaultState), action) => {
     case actionTypes.RELATED_SEARCH_FETCH_FAILURE:
       return state.merge({
         isLoading: false,
-        related: []
+        related: fromJS([])
       });
 
     case actionTypes.SEARCH_HISTORY_ADD:
       // eslint-disable-next-line no-case-declarations
       const history = state.get('history').toJS();
       // eslint-disable-next-line no-case-declarations
-      const temp = history.find((item) => item === action.payload);
-      if (!temp) {
+      const temp = history.findIndex((item) => item === action.payload);
+      if (temp === -1) {
         return state.set('history', fromJS([action.payload].concat(history)));
       } else {
-        return state;
+        history.splice(temp, 1);
+        return state.set('history', fromJS([action.payload].concat(history)));
       }
     case actionTypes.SEARCH_HISTORY_CLEAR:
-      return state.set('history', []);
+      return state.set('history', fromJS([]));
+
+    case actionTypes.SEARCH_RESULT_FETCH:
+      return state.set('isLoading', true);
+    case actionTypes.SEARCH_RESULT_FETCH_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        result: fromJS(action.queryResult)
+      });
+    case actionTypes.SEARCH_RESULT_FETCH_FAILURE:
+      return state.merge({
+        isLoading: false,
+        result: fromJS([])
+      });
 
     default:
       return state;
