@@ -5,6 +5,14 @@ import ScrollToTop from '@/components/scroll-to-top';
 import loadable from '@loadable/component';
 import Loading from '@/components/loading';
 
+const Login = loadable(() => import('@/pages/login'), {
+  fallback: (
+    <div>
+      <Loading />
+    </div>
+  )
+});
+
 const Home = loadable(() => import('@/pages/home'), {
   fallback: (
     <div>
@@ -42,6 +50,7 @@ export default function Routers() {
     <Router>
       <ScrollToTop />
       <Switch>
+        <Route path="/login" render={(props) => <Login {...props} />} />
         <Route path="/home" render={(props) => <Home {...props} />} />
         <Route path="/coupon/:id" render={(props) => <CouponDetail {...props} />} />
         <Route path="/search" render={(props) => <Search {...props} />} />
