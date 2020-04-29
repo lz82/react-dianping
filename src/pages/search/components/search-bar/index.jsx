@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import css from './index.module.less';
 export default function SearchBar(props) {
   const {
@@ -8,7 +8,7 @@ export default function SearchBar(props) {
     searchActions: { searchInputValChange, queryRelatedSearch, addSearchHistory }
   } = props;
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     if (searchInputVal) {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 import css from './index.module.less';
 
 export default function HeaderBar(props) {
-  const history = useHistory()
+  const history = useHistory();
 
   const onBack = () => {
     history.push('/home');

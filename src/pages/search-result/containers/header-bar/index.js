@@ -3,4 +3,4 @@ import View from '../../components/header-bar';
 
 // export default withRouter(View);
 
-export default View
+export default View;

@@ -61,7 +61,7 @@ export const actionCreators = {
           dispatch(actionCreators.loginSuccess(token));
         }, 500);
       } else {
-        dispatch(actionCreators.loginFailure('手机号和密码为必填项'))
+        dispatch(actionCreators.loginFailure('手机号和密码为必填项'));
       }
     };
   }
@@ -88,7 +88,7 @@ export const getToken = (state) => {
 const defaultState = {
   username: '',
   pwd: '',
-  token: '',
+  token: localStorage.getItem('token'),
   isLoading: false
 };
 

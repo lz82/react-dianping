@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PrivateRoute from '@/components/private-route'
 import ScrollToTop from '@/components/scroll-to-top';
 import loadable from '@loadable/component';
 import Loading from '@/components/loading';
@@ -63,7 +64,7 @@ export default function Routers() {
         <Route path="/coupon/:id" render={(props) => <CouponDetail {...props} />} />
         <Route path="/search" render={(props) => <Search {...props} />} />
         <Route path="/search-result" render={(props) => <SearchResult {...props} />} />
-        <Route path="/user" render={(props) => <User {...props} />} />
+        <PrivateRoute path="/user" render={props => <User {...props} />} />
       </Switch>
     </Router>
   );
