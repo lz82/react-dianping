@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import css from './index.module.less';
 export default function SearchBar(props) {
   const {
@@ -6,6 +7,8 @@ export default function SearchBar(props) {
     relatedSearch,
     searchActions: { searchInputValChange, queryRelatedSearch, addSearchHistory }
   } = props;
+
+  const history = useHistory()
 
   useEffect(() => {
     if (searchInputVal) {
@@ -23,7 +26,7 @@ export default function SearchBar(props) {
 
   const handleCancel = () => {
     searchInputValChange('');
-    props.history.goBack();
+    history.goBack();
   };
 
   const handleClickItem = (item) => {
@@ -34,7 +37,7 @@ export default function SearchBar(props) {
     if (e.keyCode === 13) {
       // 回车
       addSearchHistory(searchInputVal);
-      props.history.push('/search-result');
+      history.push('/search-result');
     }
   };
 

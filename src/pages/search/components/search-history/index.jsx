@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 import css from './index.module.less';
 export default function SearchHistory(props) {
   const {
@@ -6,8 +7,10 @@ export default function SearchHistory(props) {
     historyActions: { clearSearchHistory }
   } = props;
 
+  const history = useHistory()
+
   const handleClick = (item) => {
-    props.history.push('/search-result');
+    history.push('/search-result');
   };
 
   const handleClear = () => {

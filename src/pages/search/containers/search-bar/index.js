@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 
 import { actionCreators, searchInputVal, relatedSearch } from '@/store/modules/search';
 
@@ -19,4 +19,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(View));
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(View));
+
+export default connect(mapStateToProps, mapDispatchToProps)(View)

@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import css from './index.module.less';
 export default function HotSearch(props) {
   const {
     hotSearch,
     hotSearchActions: { queryHotSearch, addSearchHistory }
   } = props;
+
+  let history = useHistory()
+
   const handleClick = (keyword) => {
     addSearchHistory(keyword);
-    props.history.push('/search-result');
+    history.push('/search-result');
   };
 
   useEffect(() => {

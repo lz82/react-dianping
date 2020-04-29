@@ -1,14 +1,17 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 
 import css from './index.module.less';
 
 export default function HeaderBar(props) {
+  const history = useHistory()
+
   const onBack = () => {
-    props.history.push('/home');
+    history.push('/home');
   };
 
   const onSearch = () => {
-    props.history.push('/search');
+    history.push('/search');
   };
   return (
     <header className={css['search-result-header-bar-wrapper']}>

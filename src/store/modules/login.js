@@ -5,7 +5,9 @@ import { fromJS } from 'immutable';
 export const actionTypes = {
   USERNAME_CHANGE: 'login/username_change',
   PWD_CHANGE: 'login/pwd_change',
-  TOKEN_CHANGE: 'login/token_change'
+  TOKEN_CHANGE: 'login/token_change',
+  LOGIN_FAILURE: 'login/login_failure',
+  LOGIN_SUCCESS: 'login/login_success'
 };
 
 // #endregion
@@ -34,11 +36,33 @@ export const actionCreators = {
     };
   },
 
+  loginSuccess: (token) => {
+    return {
+      type: actionTypes.LOGIN_SUCCESS,
+      payload: token
+    };
+  },
+
+  loginFailure: (msg) => {
+    return {
+      type: actionTypes.LOGIN_FAILURE,
+      error: msg
+    };
+  },
+
   login: () => {
-    return (dispatch) => {
-      setTimeout(() => {
-        dispatch(actionCreators.changeToken('dianping-token'));
-      }, 500);
+    return (dispatch, getState) => {
+      const username = getState().getIn(['login', 'username']);
+      const pwd = getState().getIn(['login', 'pwd']);
+      if (username && pwd) {
+        setTimeout(() => {
+          const token = 'dianping-token';
+          localStorage.setItem('token', token);
+          dispatch(actionCreators.loginSuccess(token));
+        }, 500);
+      } else {
+        dispatch(actionCreators.loginFailure('手机号和密码为必填项'))
+      }
     };
   }
 };
@@ -74,7 +98,7 @@ export default (state = fromJS(defaultState), action) => {
       return state.set('username', action.payload);
     case actionTypes.PWD_CHANGE:
       return state.set('pwd', action.payload);
-    case actionTypes.TOKEN_CHANGE:
+    case actionTypes.LOGIN_SUCCESS:
       return state.set('token', action.payload);
     default:
       return state;
