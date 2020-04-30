@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import UserHeader from './containers/user-header';
 import OrderList from './containers/order-list';
