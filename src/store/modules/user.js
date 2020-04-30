@@ -1,13 +1,16 @@
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { QUERY_DATA } from '@/store/middlewares/query-api';
+import { userApi } from '@/services';
 
 // #region [action-types]
 
 export const actionTypes = {
   FETCH_ORDER_LIST_REQUEST: 'user/fetch_order_list_request',
   FETCH_ORDER_SUCCESS: 'user/fetch_order_list_success',
-  FETCH_ORDER_FAILURE: 'user/fetch_order_list_failure'
+  FETCH_ORDER_FAILURE: 'user/fetch_order_list_failure',
+
+  SET_TOKEN: 'user/set_token'
 };
 
 // #endregion
@@ -44,11 +47,32 @@ export const actionCreators = {
     return {
       [QUERY_DATA]: {
         reducers,
-        apiParams
+        apiParams,
+        api: userApi.queryOrderList
       },
       ...params
     };
+  },
+
+  setToken: (token) => {
+    return {
+      type: actionTypes.SET_TOKEN,
+      payload: token
+    };
   }
+};
+
+// #endregion
+
+// #region [action-selector]
+
+export const getOrderList = (state) => {
+  const temp = state.getIn(['user', 'order', 'list']);
+  return temp ? temp.toJS() : [];
+};
+
+export const getCurrentTab = (state) => {
+  return state.getIn(['user', 'currentTab']);
 };
 
 // #endregion
@@ -58,12 +82,25 @@ const defaultState = {
     isLoading: false,
     list: []
   },
-  currentTab: 0,
+  currentTab: 999,
   currentOrder: {}
 };
 
 const reducerOrder = (state = fromJS(defaultState.order), action) => {
   switch (action.type) {
+    case actionTypes.FETCH_ORDER_LIST_REQUEST:
+      return state.set('isLoading', true);
+    case actionTypes.FETCH_ORDER_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        list: fromJS(action.queryResult)
+      });
+    case actionTypes.FETCH_ORDER_FAILURE:
+      return state.merge({
+        isLoading: false,
+        list: fromJS([])
+      });
+
     default:
       return state;
   }

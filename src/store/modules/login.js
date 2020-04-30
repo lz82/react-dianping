@@ -100,6 +100,12 @@ export default (state = fromJS(defaultState), action) => {
       return state.set('pwd', action.payload);
     case actionTypes.LOGIN_SUCCESS:
       return state.set('token', action.payload);
+
+    case actionTypes.TOKEN_CHANGE:
+      if (!action.payload) {
+        localStorage.removeItem('token');
+      }
+      return state.set('token', action.payload);
     default:
       return state;
   }

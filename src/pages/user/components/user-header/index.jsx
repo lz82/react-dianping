@@ -1,12 +1,22 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import css from './index.module.less';
 
 export default function UserHeader(props) {
-  const { onBack, onLogout } = props;
+  const {
+    loginActions: { changeToken }
+  } = props;
+  const history = useHistory();
+
+  const onLogout = () => {
+    console.log(changeToken);
+    changeToken('');
+  };
+
   return (
     <header className={css['user-header-wrapper']}>
-      <div className={css['back']} onClick={onBack}>
+      <div className={css['back']} onClick={() => history.push('/home')}>
         首页
       </div>
       <div className={css['list']}>
