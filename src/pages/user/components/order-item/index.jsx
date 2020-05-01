@@ -6,7 +6,13 @@ export default function OrderItem(props) {
   const {
     data: { id, title, statusText, orderPicUrl, channel, text, type, commentId },
     isCommenting,
-    onRemove
+    onRemove,
+    comment,
+    onCommentChange,
+    stars,
+    onStarsChange,
+    onSubmitComment,
+    onCancelComment
   } = props;
 
   const handleComment = () => {};
@@ -15,8 +21,42 @@ export default function OrderItem(props) {
     onRemove(id);
   };
 
+  const handleCommentChange = (e) => {
+    console.log(e.target.value);
+    onCommentChange();
+  };
+
+  const renderStars = () => {
+    return (
+      <div className={css['star-container']}>
+        {[1, 2, 3, 4, 5].map((item, index) => {
+          return (
+            <span
+              className={[css['start'], stars >= item ? css['light'] : ''].join(' ')}
+              key={index}
+              onClick={() => onStarsChange(item)}
+            >
+              ★
+            </span>
+          );
+        })}
+      </div>
+    );
+  };
+
   const renderEditArea = () => {
-    return <div>edit area</div>;
+    return (
+      <div className={css['comment-container']}>
+        <textarea className={css['comment']} onChange={handleCommentChange} value={comment} />
+        {renderStars()}
+        <button className={css['comment-btn']} onClick={onSubmitComment}>
+          提交
+        </button>
+        <button className={css['comment-btn']} onClick={onCancelComment}>
+          取消
+        </button>
+      </div>
+    );
   };
 
   return (

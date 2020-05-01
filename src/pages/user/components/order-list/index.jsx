@@ -29,7 +29,13 @@ export default function OrderList(props) {
     currentTab,
     orderList,
     deletingOrderId,
-    userActions: { queryOrderList, changeCurrentTab, deleteOrder }
+    userActions: {
+      queryOrderList,
+      changeCurrentTab,
+      showDeleteConfirm,
+      hideDeleteConfirm,
+      deleteOrder
+    }
   } = props;
 
   useEffect(() => {
@@ -47,7 +53,7 @@ export default function OrderList(props) {
   const handleComment = (id) => {};
 
   const handleRemove = (id) => {
-    deleteOrder(id)
+    showDeleteConfirm(id);
   };
 
   const handleSubmitComment = () => {};
@@ -55,14 +61,14 @@ export default function OrderList(props) {
   const handleCancelComment = () => {};
 
   const renderOrderList = (data) => {
-    console.log('orderlist', data)
+    console.log('orderlist', data);
     const { commentingOrderId, orderComment, orderStars } = props;
     return data.map((item) => {
       return (
         <OrderItem
           key={item.id}
           data={item}
-          isCommenting={item.id === commentingOrderId}
+          isCommenting={true || item.id === commentingOrderId}
           comment={item.id === commentingOrderId ? orderComment : ''}
           stars={item.id === commentingOrderId ? orderStars : 0}
           onCommentChange={handleCommentChange}
@@ -87,7 +93,15 @@ export default function OrderList(props) {
   };
 
   const renderConfirmDialog = () => {
-    return <Confirm />;
+    return (
+      <Confirm
+        content="确定删除该订单吗？"
+        cancelText="取消"
+        confirmText="确定"
+        onCancel={hideDeleteConfirm}
+        onConfirm={deleteOrder}
+      />
+    );
   };
 
   return (

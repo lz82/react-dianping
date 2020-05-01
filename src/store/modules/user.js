@@ -14,6 +14,9 @@ export const actionTypes = {
 
   CHANGE_CURRENT_TAB: 'user/change_current_tab',
 
+  SHOW_DELETE_CONFIRM: 'user/show_delete_confirm',
+  HIDE_DELETE_CONFIRM: 'user/hide_delete_confirm',
+
   DELETE_ORDER_REQUEST: 'user/delete_order_request',
   DELETE_ORDER_SUCCESS: 'user/delete_order_success',
   DELETE_ORDER_FAILURE: 'user/delete_order_failure'
@@ -43,17 +46,15 @@ const fetchOrderListFailure = (msg) => {
   };
 };
 
-const deleteOrderRequest = (id) => {
+const deleteOrderRequest = () => {
   return {
-    type: actionTypes.DELETE_ORDER_REQUEST,
-    payload: id
+    type: actionTypes.DELETE_ORDER_REQUEST
   };
 };
 
-const deleteOrderSuccess = (id) => {
+const deleteOrderSuccess = () => {
   return {
-    type: actionTypes.DELETE_ORDER_SUCCESS,
-    payload: id
+    type: actionTypes.DELETE_ORDER_SUCCESS
   };
 };
 
@@ -88,12 +89,27 @@ export const actionCreators = {
     };
   },
 
-  deleteOrder: (id) => {
+  showDeleteConfirm: (orderId) => {
+    return {
+      type: actionTypes.SHOW_DELETE_CONFIRM,
+      payload: orderId
+    };
+  },
+
+  hideDeleteConfirm: () => {
+    return {
+      type: actionTypes.HIDE_DELETE_CONFIRM
+    };
+  },
+
+  deleteOrder: () => {
     return (dispatch, getState) => {
-      dispatch(deleteOrderRequest(id));
+      const orderId = getState().getIn(['user', 'currentOrder', 'orderId']);
+      console.log('delete order id:', orderId);
+      dispatch(deleteOrderRequest());
       setTimeout(() => {
         if (Math.random() > 0.1) {
-          dispatch(deleteOrderSuccess(id));
+          dispatch(deleteOrderSuccess());
           const currentTab = getState().getIn(['user', 'currentTab']);
           dispatch(actionCreators.queryOrderList(currentTab));
         } else {
@@ -117,6 +133,15 @@ export const getCurrentTab = (state) => {
   return state.getIn(['user', 'currentTab']);
 };
 
+export const getDeletingOrderId = (state) => {
+  const currentOrder = state.getIn(['user', 'currentOrder']);
+  if (currentOrder.get('orderId') && currentOrder.get('isDeleting')) {
+    return currentOrder.get('orderId');
+  } else {
+    return '';
+  }
+};
+
 // #endregion
 
 const defaultState = {
@@ -127,7 +152,8 @@ const defaultState = {
   currentTab: 999,
   currentOrder: {
     orderId: '',
-    isDeleting: false
+    isDeleting: false,
+    isLoading: false
   }
 };
 
@@ -153,7 +179,6 @@ const reducerOrder = (state = fromJS(defaultState.order), action) => {
 const reducerTab = (state = defaultState.currentTab, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_CURRENT_TAB:
-      console.log(state);
       return action.payload;
     default:
       return state;
@@ -162,20 +187,27 @@ const reducerTab = (state = defaultState.currentTab, action) => {
 
 const reducerCurrentOrder = (state = fromJS(defaultState.currentOrder), action) => {
   switch (action.type) {
-    case actionTypes.DELETE_ORDER_REQUEST:
+    case actionTypes.SHOW_DELETE_CONFIRM:
       return state.merge({
         orderId: action.payload,
         isDeleting: true
       });
+    case actionTypes.HIDE_DELETE_CONFIRM:
+      return state.merge({
+        orderId: '',
+        isDeleting: false
+      })
+    case actionTypes.DELETE_ORDER_REQUEST:
+      return state.set('isLoading', true);
     case actionTypes.DELETE_ORDER_SUCCESS:
       return state.merge({
         orderId: '',
+        isLoading: false,
         isDeleting: false
       });
     case actionTypes.DELETE_ORDER_FAILURE:
       return state.merge({
-        orderId: '',
-        isDeleting: false
+        isLoading: false
       });
 
     default:

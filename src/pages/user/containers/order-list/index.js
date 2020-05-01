@@ -1,14 +1,20 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { actionCreators, getOrderList, getCurrentTab } from '@/store/modules/user';
+import {
+  actionCreators,
+  getOrderList,
+  getCurrentTab,
+  getDeletingOrderId
+} from '@/store/modules/user';
 
 import View from '../../components/order-list';
 
 const mapStateToProps = (state) => {
   return {
     orderList: getOrderList(state),
-    currentTab: getCurrentTab(state)
+    currentTab: getCurrentTab(state),
+    deletingOrderId: getDeletingOrderId(state)
   };
 };
 
