@@ -4,13 +4,16 @@ import css from './index.module.less';
 
 export default function OrderItem(props) {
   const {
-    data: { title, statusText, orderPicUrl, channel, text, type, commentId },
-    isCommenting
+    data: { id, title, statusText, orderPicUrl, channel, text, type, commentId },
+    isCommenting,
+    onRemove
   } = props;
 
   const handleComment = () => {};
 
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    onRemove(id);
+  };
 
   const renderEditArea = () => {
     return <div>edit area</div>;

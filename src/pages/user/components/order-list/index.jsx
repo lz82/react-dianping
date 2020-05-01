@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import OrderItem from '../order-item';
+import Confirm from '@/components/confirm';
 
 import css from './index.module.less';
 
@@ -28,14 +29,16 @@ export default function OrderList(props) {
     currentTab,
     orderList,
     deletingOrderId,
-    userActions: { queryOrderList }
+    userActions: { queryOrderList, changeCurrentTab, deleteOrder }
   } = props;
 
   useEffect(() => {
     queryOrderList(currentTab);
   }, [currentTab]);
 
-  const handleClickTab = (type) => {};
+  const handleClickTab = (type) => {
+    changeCurrentTab(type);
+  };
 
   const handleCommentChange = () => {};
 
@@ -43,13 +46,16 @@ export default function OrderList(props) {
 
   const handleComment = (id) => {};
 
-  const handleRemove = (id) => {};
+  const handleRemove = (id) => {
+    deleteOrder(id)
+  };
 
   const handleSubmitComment = () => {};
 
   const handleCancelComment = () => {};
 
   const renderOrderList = (data) => {
+    console.log('orderlist', data)
     const { commentingOrderId, orderComment, orderStars } = props;
     return data.map((item) => {
       return (
@@ -81,7 +87,7 @@ export default function OrderList(props) {
   };
 
   const renderConfirmDialog = () => {
-    return <div>delete confirm model</div>;
+    return <Confirm />;
   };
 
   return (
@@ -92,7 +98,9 @@ export default function OrderList(props) {
             <div key={item.type} className={css['tab']} onClick={() => handleClickTab(item.type)}>
               <span
                 className={
-                  currentTab === index ? [css['title'], css['selected']].join(' ') : css['title']
+                  currentTab === item.type
+                    ? [css['title'], css['selected']].join(' ')
+                    : css['title']
                 }
               >
                 {item.title}
