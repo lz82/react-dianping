@@ -19,7 +19,13 @@ export const actionTypes = {
 
   DELETE_ORDER_REQUEST: 'user/delete_order_request',
   DELETE_ORDER_SUCCESS: 'user/delete_order_success',
-  DELETE_ORDER_FAILURE: 'user/delete_order_failure'
+  DELETE_ORDER_FAILURE: 'user/delete_order_failure',
+
+  SHOW_COMMENT_EDIT: 'user/show_comment_edit',
+  HIDE_COMMENT_EDIT: 'user/hide_comment_edit',
+
+  CHANGE_COMMENT: 'user/change_comment',
+  CHANGE_RATE: 'user/change_rate'
 };
 
 // #endregion
@@ -117,6 +123,33 @@ export const actionCreators = {
         }
       }, 500);
     };
+  },
+
+  showCommentEdit: (orderId) => {
+    return {
+      type: actionTypes.SHOW_COMMENT_EDIT,
+      payload: orderId
+    };
+  },
+
+  hideCommentEdit: () => {
+    return {
+      type: actionTypes.HIDE_COMMENT_EDIT
+    };
+  },
+
+  changeComment: (val) => {
+    return {
+      type: actionTypes.CHANGE_COMMENT,
+      payload: val
+    };
+  },
+
+  changeRate: (val) => {
+    return {
+      type: actionTypes.CHANGE_RATE,
+      payload: val
+    };
   }
 };
 
@@ -142,6 +175,23 @@ export const getDeletingOrderId = (state) => {
   }
 };
 
+export const getCommentingOrderId = (state) => {
+  const currentOrder = state.getIn(['user', 'currentOrder']);
+  if (currentOrder.get('orderId') && currentOrder.get('isCommenting')) {
+    return currentOrder.get('orderId');
+  } else {
+    return '';
+  }
+};
+
+export const getComment = (state) => {
+  return state.getIn(['user', 'currentOrder', 'comment']);
+};
+
+export const getRate = (state) => {
+  return state.getIn(['user', 'currentOrder', 'rate']);
+};
+
 // #endregion
 
 const defaultState = {
@@ -153,7 +203,10 @@ const defaultState = {
   currentOrder: {
     orderId: '',
     isDeleting: false,
-    isLoading: false
+    isLoading: false,
+    isCommenting: false,
+    comment: '',
+    rate: 0
   }
 };
 
@@ -196,7 +249,8 @@ const reducerCurrentOrder = (state = fromJS(defaultState.currentOrder), action) 
       return state.merge({
         orderId: '',
         isDeleting: false
-      })
+      });
+
     case actionTypes.DELETE_ORDER_REQUEST:
       return state.set('isLoading', true);
     case actionTypes.DELETE_ORDER_SUCCESS:
@@ -209,6 +263,24 @@ const reducerCurrentOrder = (state = fromJS(defaultState.currentOrder), action) 
       return state.merge({
         isLoading: false
       });
+
+    case actionTypes.SHOW_COMMENT_EDIT:
+      return state.merge({
+        orderId: action.payload,
+        isCommenting: true
+      });
+    case actionTypes.HIDE_COMMENT_EDIT:
+      return state.merge({
+        orderId: '',
+        isCommenting: false,
+        comment: '',
+        rate: 0
+      });
+
+    case actionTypes.CHANGE_COMMENT:
+      return state.set('comment', action.payload);
+    case actionTypes.CHANGE_RATE:
+      return state.set('rate', action.payload);
 
     default:
       return state;

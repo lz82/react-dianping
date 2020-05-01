@@ -8,6 +8,7 @@ export default function OrderItem(props) {
     isCommenting,
     onRemove,
     comment,
+    onComment,
     onCommentChange,
     stars,
     onStarsChange,
@@ -15,15 +16,16 @@ export default function OrderItem(props) {
     onCancelComment
   } = props;
 
-  const handleComment = () => {};
+  const handleComment = (orderId) => {
+    onComment(orderId);
+  };
 
   const handleRemove = () => {
     onRemove(id);
   };
 
   const handleCommentChange = (e) => {
-    console.log(e.target.value);
-    onCommentChange();
+    onCommentChange(e.target.value);
   };
 
   const renderStars = () => {

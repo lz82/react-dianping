@@ -5,7 +5,10 @@ import {
   actionCreators,
   getOrderList,
   getCurrentTab,
-  getDeletingOrderId
+  getDeletingOrderId,
+  getCommentingOrderId,
+  getComment,
+  getRate
 } from '@/store/modules/user';
 
 import View from '../../components/order-list';
@@ -14,7 +17,10 @@ const mapStateToProps = (state) => {
   return {
     orderList: getOrderList(state),
     currentTab: getCurrentTab(state),
-    deletingOrderId: getDeletingOrderId(state)
+    deletingOrderId: getDeletingOrderId(state),
+    commentingOrderId: getCommentingOrderId(state),
+    comment: getComment(state),
+    starts: getRate(state)
   };
 };
 

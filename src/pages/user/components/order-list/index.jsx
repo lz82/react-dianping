@@ -34,7 +34,11 @@ export default function OrderList(props) {
       changeCurrentTab,
       showDeleteConfirm,
       hideDeleteConfirm,
-      deleteOrder
+      deleteOrder,
+      showCommentEdit,
+      hideCommentEdit,
+      changeComment,
+      changeRate
     }
   } = props;
 
@@ -46,11 +50,11 @@ export default function OrderList(props) {
     changeCurrentTab(type);
   };
 
-  const handleCommentChange = () => {};
+  const handleCommentChange = (val) => {
+    changeComment(val);
+  };
 
   const handleStarsChange = () => {};
-
-  const handleComment = (id) => {};
 
   const handleRemove = (id) => {
     showDeleteConfirm(id);
@@ -58,22 +62,23 @@ export default function OrderList(props) {
 
   const handleSubmitComment = () => {};
 
-  const handleCancelComment = () => {};
+  const handleCancelComment = () => {
+    hideCommentEdit();
+  };
 
   const renderOrderList = (data) => {
-    console.log('orderlist', data);
-    const { commentingOrderId, orderComment, orderStars } = props;
+    const { commentingOrderId, comment, orderStars } = props;
     return data.map((item) => {
       return (
         <OrderItem
           key={item.id}
           data={item}
-          isCommenting={true || item.id === commentingOrderId}
-          comment={item.id === commentingOrderId ? orderComment : ''}
+          isCommenting={item.id === commentingOrderId}
+          comment={item.id === commentingOrderId ? comment : ''}
           stars={item.id === commentingOrderId ? orderStars : 0}
           onCommentChange={handleCommentChange}
           onStarsChange={handleStarsChange}
-          onComment={() => handleComment(item.id)}
+          onComment={() => showCommentEdit(item.id)}
           onRemove={() => handleRemove(item.id)}
           onSubmitComment={handleSubmitComment}
           onCancelComment={() => handleCancelComment()}
