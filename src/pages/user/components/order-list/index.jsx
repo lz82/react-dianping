@@ -38,7 +38,7 @@ export default function OrderList(props) {
       showCommentEdit,
       hideCommentEdit,
       changeComment,
-      changeRate
+      // changeRate
     }
   } = props;
 
