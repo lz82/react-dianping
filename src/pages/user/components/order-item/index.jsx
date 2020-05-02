@@ -34,7 +34,7 @@ export default function OrderItem(props) {
         {[1, 2, 3, 4, 5].map((item, index) => {
           return (
             <span
-              className={[css['start'], stars >= item ? css['light'] : ''].join(' ')}
+              className={[css['star'], stars >= item ? css['light'] : ''].join(' ')}
               key={index}
               onClick={() => onStarsChange(item)}
             >

@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     deletingOrderId: getDeletingOrderId(state),
     commentingOrderId: getCommentingOrderId(state),
     comment: getComment(state),
-    starts: getRate(state)
+    orderStars: getRate(state)
   };
 };
 

@@ -25,7 +25,11 @@ export const actionTypes = {
   HIDE_COMMENT_EDIT: 'user/hide_comment_edit',
 
   CHANGE_COMMENT: 'user/change_comment',
-  CHANGE_RATE: 'user/change_rate'
+  CHANGE_RATE: 'user/change_rate',
+
+  SUBMIT_COMMENT_REQUEST: 'user/submit_comment_request',
+  SUBMIT_COMMENT_SUCCESS: 'user/submit_comment_success',
+  SUBMIT_COMMENT_FAILURE: 'user/submit_comment_failure'
 };
 
 // #endregion
@@ -67,6 +71,25 @@ const deleteOrderSuccess = () => {
 const deleteOrderFailure = (msg) => {
   return {
     type: actionTypes.DELETE_ORDER_FAILURE,
+    error: msg
+  };
+};
+
+const submitCommentRequest = () => {
+  return {
+    type: actionTypes.SUBMIT_COMMENT_REQUEST
+  };
+};
+
+const submitCommentSuccess = () => {
+  return {
+    type: actionTypes.SUBMIT_COMMENT_SUCCESS
+  };
+};
+
+const submitCommentFailure = (msg) => {
+  return {
+    type: actionTypes.SUBMIT_COMMENT_FAILURE,
     error: msg
   };
 };
@@ -114,12 +137,32 @@ export const actionCreators = {
       console.log('delete order id:', orderId);
       dispatch(deleteOrderRequest());
       setTimeout(() => {
-        if (Math.random() > 0.1) {
+        if (Math.random() > 0.5) {
           dispatch(deleteOrderSuccess());
           const currentTab = getState().getIn(['user', 'currentTab']);
           dispatch(actionCreators.queryOrderList(currentTab));
         } else {
           dispatch(deleteOrderFailure('删除 订单失败，请重试！'));
+        }
+      }, 500);
+    };
+  },
+
+  submitComment: () => {
+    return (dispatch, getState) => {
+      const currentOrder = getState().getIn(['user', 'currentOrder']);
+      const orderId = currentOrder.get('orderId');
+      const comment = currentOrder.get('comment');
+      const rate = currentOrder.get('rate');
+      console.log(orderId, comment, rate);
+      dispatch(submitCommentRequest());
+      setTimeout(() => {
+        if (Math.random() > 0.5) {
+          dispatch(submitCommentSuccess());
+          const currentTab = getState().getIn(['user', 'currentTab']);
+          dispatch(actionCreators.queryOrderList(currentTab));
+        } else {
+          dispatch(submitCommentFailure('提交评论失败，请重试！'));
         }
       }, 500);
     };
@@ -282,6 +325,20 @@ const reducerCurrentOrder = (state = fromJS(defaultState.currentOrder), action) 
     case actionTypes.CHANGE_RATE:
       return state.set('rate', action.payload);
 
+    case actionTypes.SUBMIT_COMMENT_REQUEST:
+      return state.set('isLoading', true);
+    case actionTypes.SUBMIT_COMMENT_SUCCESS:
+      return state.merge({
+        orderId: '',
+        isLoading: false,
+        isCommenting: false,
+        comment: '',
+        rate: 0
+      });
+    case actionTypes.SUBMIT_COMMENT_FAILURE:
+      return state.merge({
+        isLoading: false
+      });
     default:
       return state;
   }

@@ -38,7 +38,8 @@ export default function OrderList(props) {
       showCommentEdit,
       hideCommentEdit,
       changeComment,
-      // changeRate
+      changeRate,
+      submitComment
     }
   } = props;
 
@@ -54,13 +55,17 @@ export default function OrderList(props) {
     changeComment(val);
   };
 
-  const handleStarsChange = () => {};
+  const handleStarsChange = (val) => {
+    changeRate(val);
+  };
 
   const handleRemove = (id) => {
     showDeleteConfirm(id);
   };
 
-  const handleSubmitComment = () => {};
+  const handleSubmitComment = () => {
+    submitComment();
+  };
 
   const handleCancelComment = () => {
     hideCommentEdit();
