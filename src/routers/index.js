@@ -54,6 +54,14 @@ const User = loadable(() => import('@/pages/user'), {
   )
 });
 
+const Purchase = loadable(() => import('@/pages/purchase'), {
+  fallback: (
+    <div>
+      <Loading />
+    </div>
+  )
+});
+
 export default function Routers() {
   return (
     <Router>
@@ -65,6 +73,7 @@ export default function Routers() {
         <Route path="/search" render={(props) => <Search {...props} />} />
         <Route path="/search-result" render={(props) => <SearchResult {...props} />} />
         <PrivateRoute path="/user" render={(props) => <User {...props} />} />
+        <PrivateRoute path="/purchase/:id" render={(props) => <Purchase {...props} />} />
         <Redirect to="/home" />
       </Switch>
     </Router>
