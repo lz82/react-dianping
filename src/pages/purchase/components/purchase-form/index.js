@@ -3,14 +3,15 @@ import React from 'react';
 import css from './index.module.less';
 
 export default function PurchaseForm(props) {
-  const { quantity = 10, phone = 13482124075 } = props;
-  const totalPrice = (100 * quantity).toFixed(1);
+  const { quantity, totalPrice, phone = 13482124075, onDec, onInc } = props;
 
-  const handleDecrease = () => {};
+  const handleDecrease = () => {
+    onDec();
+  };
 
-  const handleIncrease = () => {};
-
-  const handleChange = () => {};
+  const handleIncrease = () => {
+    onInc();
+  };
 
   const handleClick = () => {};
 
@@ -23,12 +24,7 @@ export default function PurchaseForm(props) {
             <span className={css['dec']} onClick={handleDecrease}>
               -
             </span>
-            <input
-              className={css['quantity']}
-              type="number"
-              onChange={handleChange}
-              value={quantity}
-            />
+            <input className={css['quantity']} type="number" value={quantity} />
             <span className={css['inc']} onClick={handleIncrease}>
               +
             </span>
