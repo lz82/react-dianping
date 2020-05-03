@@ -3,7 +3,7 @@ import React from 'react';
 import css from './index.module.less';
 
 export default function PurchaseForm(props) {
-  const { quantity, totalPrice, phone = 13482124075, onDec, onInc } = props;
+  const { quantity, totalPrice, phone = 13482124075, onDec, onInc, onSubmit } = props;
 
   const handleDecrease = () => {
     onDec();
@@ -13,7 +13,9 @@ export default function PurchaseForm(props) {
     onInc();
   };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    onSubmit();
+  };
 
   return (
     <div className={css['purchase-form-wrapper']}>
@@ -24,7 +26,7 @@ export default function PurchaseForm(props) {
             <span className={css['dec']} onClick={handleDecrease}>
               -
             </span>
-            <input className={css['quantity']} type="number" value={quantity} />
+            <input className={css['quantity']} type="number" value={quantity} readOnly />
             <span className={css['inc']} onClick={handleIncrease}>
               +
             </span>

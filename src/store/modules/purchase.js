@@ -158,7 +158,21 @@ const settleReducer = (state = fromJS(defaultState.settle), action) => {
   }
 };
 
+const purchaseReducer = (state = defaultState.isSubmiting, action) => {
+  switch (action.type) {
+    case actionTypes.SUBMIT_ORDER_REQUEST:
+      return true;
+    case actionTypes.SUBMIT_ORDER_SUCCESS:
+      return false;
+    case actionTypes.submitOrderFailure:
+      return false
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   product: productReducer,
-  settle: settleReducer
+  settle: settleReducer,
+  isSubmiting: purchaseReducer
 });
