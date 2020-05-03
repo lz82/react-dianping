@@ -165,7 +165,7 @@ const purchaseReducer = (state = defaultState.isSubmiting, action) => {
     case actionTypes.SUBMIT_ORDER_SUCCESS:
       return false;
     case actionTypes.submitOrderFailure:
-      return false
+      return false;
     default:
       return state;
   }
